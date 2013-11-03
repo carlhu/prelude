@@ -381,7 +381,7 @@ by Prelude.")
             (define-key org-mode-map "\C-j" 'org-insert-heading-respect-content)))))
 
 (require 'color-theme)
-(color-theme-initialize)
+;(color-theme-initialize)
 (setq color-theme-is-global t)
 (color-theme-sanityinc-solarized-dark)
 ;(enable-theme 'zenburn)
