@@ -37,6 +37,7 @@
        (if (equal system-type 'windows-nt) "USERNAME" "USER")))
 
 (message "Prelude is powering up... Be patient, Master %s!" current-user)
+(setq prelude-guru nil)
 
 (when (version< emacs-version "24.1")
   (error "Prelude requires at least GNU Emacs 24.1"))
@@ -107,7 +108,6 @@ by Prelude.")
   (message "Loading personal configuration files in %s..." prelude-personal-dir)
   (mapc 'load (directory-files prelude-personal-dir 't "^[^#].*el$")))
 
-
 (setq visual-line-mode nil)
 (setq global-visual-line-mode nil)
 (setq org-indent-mode t)
@@ -120,7 +120,7 @@ by Prelude.")
 (setq org-yank-adjusted-subtrees t) ; advanced cut and paste behavior for orgmode points.
 (setq org-yank-folded-subtrees t) ; advanced cut and paste behavior for orgmode points.
 (setq org-hide-leading-stars t)
-(setq org-odd-level-only nil) 
+(setq org-odd-level-only nil)
 ;; configure org
 (setq org-insert-heading-respect-content nil)
 ;; (setq org-M-RET-may-split-line t)
@@ -130,7 +130,7 @@ by Prelude.")
 (setq org-return-follows-link nil)
 ;(setq org-use-speed-commands t)
 (setq org-startup-align-all-tables nil)
-(setq org-tags-column 0) 
+(setq org-tags-column 0)
 ;; (setq org-archive-location (concat org-directory "archive/%s_archive::"))
 ;; (setq org-agenda-remove-tags t)
 ;;(setq org-treat-S-cursor-todo-selection-as-state-change t)
@@ -138,7 +138,7 @@ by Prelude.")
 (setq org-link-frame-setup '((vm . vm-visit-folder-other-frame)
                              (gnus . org-gnus-no-new-news)
                              (file . find-file-other-window)
-                             (wl . wl-other-frame))) 
+                             (wl . wl-other-frame)))
 (setq org-use-speed-commands t)
 (setq org-speed-commands-user nil)
 (add-to-list 'org-speed-commands-user
@@ -173,12 +173,12 @@ by Prelude.")
   (flet ((yes-or-no-p (&rest args) t)
          (y-or-n-p (&rest args) t))
     ad-do-it))
-(global-set-key [(control next)] 'next-buffer) 
+(global-set-key [(control next)] 'next-buffer)
 (global-set-key [(control prior)] 'previous-buffer)
 (define-key global-map (kbd "M-c") 'quick-copy-line)
 ;(define-key global-map (kbd "<f4>") 'magit-status)
 ; (global-set-key (kbd "\C-x\C-e") 'org-export-as-html)
-(define-key global-map (kbd "C-/") 'hippie-expand) 
+(define-key global-map (kbd "C-/") 'hippie-expand)
 (define-key minibuffer-local-map (kbd "C-/") 'hippie-expand)
 (define-key global-map (kbd "C-=") 'kill-current-buffer-and-frame)
 (define-key global-map (kbd "M-<f3>") 'switch-to-minus-todo)
@@ -249,7 +249,7 @@ by Prelude.")
              (define-key org-mode-map (kbd "<f4>") 'org-archive-subtree)
 ;             (define-key org-mode-map (kbd "<f7>") 'export-to-tex)
              ;; (define-key org-mode-map (kbd "M-W") 'org-copy-special)
-             (define-key org-mode-map (kbd "M-W") 'my-copy-orgmode)             
+             (define-key org-mode-map (kbd "M-W") 'my-copy-orgmode)
              (define-key org-mode-map (kbd "C-S-w") 'org-cut-special)
              (define-key org-mode-map (kbd "C-c C-d") 'org-time-stamp)
              (define-key org-mode-map (kbd "C-t") 'org-ctrl-c-ctrl-c)
@@ -270,12 +270,12 @@ by Prelude.")
           '(lambda ()
              (define-key xml-mode-map (kbd "<f5>") 'my-blog-export)))
 
-(global-set-key [(control next)] 'next-buffer) 
+(global-set-key [(control next)] 'next-buffer)
 (global-set-key [(control prior)] 'previous-buffer)
 (define-key global-map (kbd "M-c") 'quick-copy-line)
 ;(define-key global-map (kbd "<f4>") 'magit-status)
 ; (global-set-key (kbd "\C-x\C-e") 'org-export-as-html)
-(define-key global-map (kbd "C-/") 'hippie-expand) 
+(define-key global-map (kbd "C-/") 'hippie-expand)
 (define-key minibuffer-local-map (kbd "C-/") 'hippie-expand)
 (define-key global-map (kbd "C-=") 'kill-current-buffer-and-frame)
 (define-key global-map (kbd "M-<f3>") 'switch-to-minus-todo)
@@ -306,6 +306,11 @@ by Prelude.")
 (global-set-key [M-down] 'move-text-down)
 (global-set-key (kbd "C-S-o")  'occur)
 (global-set-key (kbd "C-x b") 'switch-to-buffer)
+
+(global-set-key (kbd "M-[")  'cua-scroll-down)
+(global-set-key (kbd "M-]") 'cua-scroll-up)
+
+
 (define-key global-map (kbd "C-g") 'keyboard-escape-quit)
 (global-set-key (kbd "C-c C-8") 'org-ctrl-c-star)
 ;;; esc quits
@@ -346,7 +351,7 @@ by Prelude.")
              (define-key org-mode-map (kbd "<f4>") 'org-archive-subtree)
 ;             (define-key org-mode-map (kbd "<f7>") 'export-to-tex)
              ;; (define-key org-mode-map (kbd "M-W") 'org-copy-special)
-             (define-key org-mode-map (kbd "M-W") 'my-copy-orgmode)             
+             (define-key org-mode-map (kbd "M-W") 'my-copy-orgmode)
              (define-key org-mode-map (kbd "C-S-w") 'org-cut-special)
              (define-key org-mode-map (kbd "C-c C-d") 'org-time-stamp)
              (define-key org-mode-map (kbd "C-t") 'org-ctrl-c-ctrl-c)
@@ -375,16 +380,91 @@ by Prelude.")
             (define-key org-mode-map "\C-\M-j" 'org-meta-return)
             (define-key org-mode-map "\C-j" 'org-insert-heading-respect-content)))))
 
-(message "My init file is completely loaded.")
-
-
-
-(message "My init file is completely loaded.")
-
-
 (require 'color-theme)
-(color-theme-solarized-dark)
-(enable-theme 'zenburn)
+(color-theme-initialize)
+(setq color-theme-is-global t)
+(color-theme-sanityinc-solarized-dark)
+;(enable-theme 'zenburn)
+(blink-cursor-mode 0)
+
+(defun color-theme-solarize-adjust ()
+  (interactive)
+  (color-theme-install
+   '(color-theme-solarize-adjust
+     (
+      (foreground-color . "#9baaaa")
+      (cursor-color . "#93a1a1" ) ; Cursor
+      ;(background-color . "002b36") ; this is solarized default base 02 background color. it's too bright.
+      ;(background-color . "#00111d") ; very good color! deep deep blue.
+      (background-color . "#00112a") ; trying this one for now. slightly brighter deep blue.
+      (help-highlight-face . underline)
+      (ibuffer-dired-buffer-face . font-lock-function-name-face)
+      (ibuffer-help-buffer-face . font-lock-comment-face)
+      (ibuffer-hidden-buffer-face . font-lock-warning-face)
+      (ibuffer-read-only-buffer-face . font-lock-type-face)
+      (ibuffer-special-buffer-face . font-lock-keyword-face)
+      (ibuffer-title-face . font-lock-type-face)
+      (ps-line-number-color . "black")
+      (ps-zebra-color . 0.95)
+;      (tags-tag-face ((t (:foreground "#555"))))
+      (view-highlight-face . highlight)
+      (widget-mouse-face . highlight)
+      (highlight ((t (:foreground "#000000"  :background "#bbbbbb"))))
+;      (mode-line-buffer-id ((,class (:foreground "#555555" :background nil :weight normal ))))
+;      (mode-line ((,class (:foreground "#555555" :background "#333333" :weight normal :font "Consolas-11"))))
+      )
+     (ibuffer-deletion-face ((t (:foreground "#00ffff"))))
+     (ibuffer-marked-face ((t (:foreground "#00ffff"))))
+     (menu ((t (nil))))
+     (show-paren-match-face ((t (:foreground "#ffffff" :background nil))))
+     (show-paren-mismatch-face ((t (:background "#ffffff" :foreground nil))))
+     (scroll-bar ((t ("#444444"))))
+     (secondary-selection ((t (:foreground "#ffffff" :background "#444444"))))
+     (org-done ((t (  :foreground "#586e75"))))
+     (org-drawer ((t (:foreground  "#586e75"))))
+     (org-ellipsis ((t (:foreground "#555555" :underline nil))))
+     (org-hide ((t (:foreground "#000000"))))
+     ; B&W based org-levels
+     ;; (org-todo ((t (  :foreground "#b58900" :background nil))))
+     ;; (org-level-1 ((t (  :foreground "#93a1a1"  ))))
+     ;; (org-level-2 ((t (  :foreground  "#839496"))))
+     ;; (org-level-3 ((t (  :foreground  "#657b83"))))
+     ;; (org-level-4 ((t (  :foreground "#586e75"  :weight normal :slant normal))))
+     ;; (org-level-5 ((t (  :foreground "#586e75"  :weight normal :slant normal))))
+     ;; (org-level-6 ((t (  :foreground "#586e75"  :weight normal :slant normal))))
+     ; Color based org-levels
+     (org-todo ((t (  :foreground "#c61b7a" :background nil)))) ; magenta, darker.
+     (org-level-1 ((t (  :foreground "#2aa494"  ))))
+     (org-level-2 ((t (  :foreground  "#b38700"))))
+     (org-level-3 ((t (  :foreground  "#368bc2"))))
+     (org-level-4 ((t (  :foreground  "#859900"))))
+     (org-level-5 ((t (  :foreground  "#6f74c9"))))
+     (org-tag ((t (:bold nil :weight normal :foreground "#cb4b16"))))
+     (org-table ((t (:foreground "#93a1a1"))))
+     (org-link ((t (:underline nil :foreground  "#cb4b16" ))))
+     ;; Other stuff.
+     (isearch ((t (:underline nil :foreground "#ffffff" :underline nil :weight bold))))
+     (region ((t (:inverse-video t)))) ; Visual
+     ))
+  )
+
+;(set-face-attribute 'fringe nil :foreground "#222222")
+;(set-face-attribute 'linum nil :foreground "#444444")
+; (set-face-attribute 'fringe nil :foreground "#111111" :background "#000000")
+
+(color-theme-solarize-adjust)
+
+(global-hl-line-mode 0) ; turn it on for all modes by default
+
+(cua-mode t)
+(setq cua-auto-tabify-rectangles nil) ;; Don't tabify after rectangle commands
+(transient-mark-mode nil)               ;; No region when it is not highlighted
+(setq cua-keep-region-after-copy nil)
+
+
+
+(setq org-blank-before-new-entry '((heading . nil) (plain-list-item . nil)))
+
 
 (message "Prelude is ready to do thy bidding, Master %s!" current-user)
 
@@ -392,5 +472,6 @@ by Prelude.")
  ;; greet the use with some useful tip
  (run-at-time 5 nil 'prelude-tip-of-the-day))
 
+(setq prelude-guru nil)
 
 ;;; init.el ends here
